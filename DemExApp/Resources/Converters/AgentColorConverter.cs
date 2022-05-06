@@ -18,7 +18,7 @@ namespace DemExApp.Resources.Converters
             if ((int)value >= 25)
                 return Brushes.LightGreen;
 
-            return null;
+            return Brushes.White;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

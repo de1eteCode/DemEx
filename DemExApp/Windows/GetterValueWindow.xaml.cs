@@ -26,7 +26,7 @@ namespace DemExApp.Windows
                 return;
             }
 
-            if (val >= 0 || val < int.MaxValue)
+            if (val >= 0 && val < int.MaxValue)
             {
                 DialogResult = true;
                 Close();
