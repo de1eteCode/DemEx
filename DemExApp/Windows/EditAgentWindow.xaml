@@ -1,0 +1,155 @@
+﻿<Window 
+        x:Name="_this"
+        x:Class="DemExApp.Windows.EditAgentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemExApp.Windows"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        DataContext="{Binding ElementName=_this}"
+        Title="Компания | Редактирование агента" 
+        Height="600" Width="800"
+    Closed="_this_Closed">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Margin="5">
+            <GroupBox Header="Имя">
+                <TextBox Text="{Binding Agent.Name}"/>
+            </GroupBox>
+            <GroupBox Header="Email">
+                <TextBox Text="{Binding Agent.Email}"/>
+            </GroupBox>
+            <GroupBox Header="Телефон">
+                <TextBox  Text="{Binding Agent.Phone}"/>
+            </GroupBox>
+            <GroupBox Header="Адрес">
+                <TextBox  Text="{Binding Agent.Address}"/>
+            </GroupBox>
+            <GroupBox Header="Приоритет">
+                <TextBox  Text="{Binding Agent.Priority}"/>
+            </GroupBox>
+            <GroupBox Header="ИНН">
+                <TextBox  Text="{Binding Agent.INN}"/>
+            </GroupBox>
+            <GroupBox Header="КПП">
+                <TextBox  Text="{Binding Agent.KPP}"/>
+            </GroupBox>
+            <GroupBox Header="Тип">
+                <ComboBox
+                    ItemsSource="{Binding TypeAgents}"
+                    SelectedItem="{Binding TypeAgent}"
+                    DisplayMemberPath="Name"/>
+            </GroupBox>
+            <GroupBox Header="Лого">
+                <StackPanel>
+                    <Image
+                        Width="100"
+                        Height="100"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        Source="{Binding Agent.ImageShow}"/>
+                    <Button
+                        Width="100"
+                        Content="Загрузить"
+                        Click="LoadImage_Click"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <GroupBox
+            Grid.Column="1"
+            Header="Реализация продукции"
+            Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <GroupBox
+                    Grid.Row="0"
+                    Header="Добавить">
+                    <StackPanel>
+                        <TextBox
+                            Margin="1"
+                            Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ComboBox
+                            Margin="1"
+                            ItemsSource="{Binding FilteredProducts}"
+                            SelectionChanged="ComboBox_AddProduct"
+                            DisplayMemberPath="Name"/>
+                    </StackPanel>
+                </GroupBox>
+                <DataGrid
+                    Grid.Row="1"
+                    ItemsSource="{Binding AgentProducts}"
+                    SelectedItem="{Binding SelectedProductAgent, Mode=OneWayToSource}"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Header="Название продукта"
+                            Width="140"
+                            Binding="{Binding Product.Name}"/>
+                        <DataGridTextColumn 
+                            Header="Количество"
+                            Width="100"
+                            Binding="{Binding Count}"/>
+                        <DataGridTextColumn 
+                            Header="Дата продажи"
+                            Width="100"
+                            Binding="{Binding Date, StringFormat={}{0:d}}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button
+                    Grid.Row="2"
+                    Margin="5"
+                    Content="Удалить"
+                    Click="RemoveProductAgent"/>
+
+            </Grid>
+        </GroupBox>
+        <StackPanel
+            Orientation="Horizontal"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <Button
+                Width="100"
+                Margin="5"
+                Content="Сохранить"
+                Click="Save_Click"/>
+            <Button
+                Width="100"
+                Margin="5"
+                Content="Удалить"
+                Click="Delete_Click"/>
+            <Button
+                Width="100"
+                Margin="5"
+                Content="Отмена"
+                Click="Close_Click"/>
+        </StackPanel>
+    
+    </Grid>
+</Window>
